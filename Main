@@ -1,5 +1,3 @@
-local FoundIslands = {}
-
 local PlaceID = game.PlaceId
 local AllIDs = {}
 local foundAnything = ""
@@ -121,6 +119,8 @@ local url = "https://discord.com/api/webhooks/1362179485138686032/_WkAElqFAcSC29
 
 ----------
 
+local FoundIslands = {}
+
 for _, Island in workspace.Rendered.Rifts:GetChildren() do
 	if Island.Display.SurfaceGui:FindFirstChild("Icon") then
 		table.insert(FoundIslands, tostring(Island.Name .. " (" .. Island.Display.SurfaceGui.Icon.Luck.Text .. ")"))
@@ -138,7 +138,7 @@ task.wait(0.1)
 local LF_EGG = "void-egg (x25)"
 
 local Embed = {
-	["title"] = "🔎 Eggs Found: ",
+	["title"] = "🥚 Eggs Found: ",
 	["description"] = tostring(table.concat(FoundIslands, "\n ")),
 	["fields"] = {
 		{
@@ -156,9 +156,6 @@ local Embed = {
 
 SendMessageEMBED(url, Embed)
 
-warn("x1")
-warn(FoundIslands)
-
 task.wait(0.5)
 
 if table.find(FoundIslands, LF_EGG) then
@@ -175,7 +172,7 @@ if table.find(FoundIslands, LF_EGG) then
 				local Height = FoundEgg.Display.CFrame.Y
 
 				local Embed_FOUND = {
-					["title"] = "🔎 EGG HAS BEEN FOUND!",
+					["title"] = "❗ EGG HAS BEEN FOUND ❗",
 					["description"] = LF_EGG .. " has been found!",
 					["fields"] = {
 						{
@@ -207,7 +204,14 @@ if table.find(FoundIslands, LF_EGG) then
 
 				SendMessage(url, "**✨ EGG FOUND** - @everyone")
 				SendMessageEMBED(url, Embed_FOUND)
+				
+				task.wait(30)
+				
+				SendMessage(url, "*Leaving server in 15s...*")
 
+				task.wait(15)
+				
+				SendMessage(url, "*Looking for more eggs...*")
 			end
 		end
 	end
