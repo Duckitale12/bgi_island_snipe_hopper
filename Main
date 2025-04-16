@@ -212,6 +212,10 @@ if table.find(FoundIslands, LF_EGG) then
 				task.wait(15)
 				
 				SendMessage(url, "*Looking for more eggs...*")
+				
+				task.wait(1)
+				
+				ServerHop()
 			end
 		end
 	end
