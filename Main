@@ -152,7 +152,7 @@ local Embed = {
 	["fields"] = {
 		{
 			["name"] = "Searching For:",
-			["value"] = "void-egg (x25)",
+			["value"] = tostring(table.concat(LF_Eggs, "\n ")),
 		},
 	},
 	["color"] = 16777215,
