@@ -123,7 +123,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.32v"
+local ScriptVersion = "0.1.4v"
 
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
