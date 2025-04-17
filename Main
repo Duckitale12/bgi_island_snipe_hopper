@@ -181,7 +181,8 @@ end
 if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
 	ServerHop()
-else
+elseif FoundEgg ~= nil then
+	warn(FoundEgg)
 	local LuckMulti = FoundEgg.Display.SurfaceGui.Icon.Luck.Text
 	local Timer = FoundEgg.Display.SurfaceGui.Timer.Text
 	local Height = FoundEgg.Display.CFrame.Y
