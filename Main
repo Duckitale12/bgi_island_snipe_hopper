@@ -82,7 +82,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.54v"
+local ScriptVersion = "0.1.6v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -107,13 +107,18 @@ end
 task.wait(0.1)
 
 local Embed = {
-	["title"] = "🥚 Eggs Found: ",
-	["description"] = "```" .. tostring(table.concat(FoundIslands, "\n ")) .. "```",
+	["title"] = "🥚 Eggs Found",
+	["description"] = "```" .. tostring(table.concat(FoundIslands, "\n")) .. "```",
 	["fields"] = {
 		{
-			["name"] = "🔎 Searching For:",
-			["value"] = "```" .. tostring(table.concat(LF_Eggs, "\n ")) .. "```",
+			["name"] = "🔑 Server Link",
+			["value"] = "```roblox://placeId=" .. tostring(placeId) .. "&gameInstanceId=" .. tostring(game.JobId) .. "```",
 		},
+		{
+			["name"] = "🔎 Searching For",
+			["value"] = "```" .. tostring(table.concat(LF_Eggs, "\n")) .. "```",
+		},
+		
 	},
 	["color"] = 16777215,
 	["footer"] = {
@@ -154,32 +159,32 @@ elseif FoundEgg ~= nil then
 					local Height = FoundEgg_OBJECT.Display.CFrame.Y
 
 					local Embed_FOUND = {
-						["title"] = "❗ EGG HAS BEEN FOUND ❗",
-						["description"] = FoundEgg .. " has been found!",
+						["title"] = "✨ Rare Egg Found ✨",
+						["description"] = "```" .. FoundEgg .. " has been found!" .. "```",
 						["fields"] = {
 							{
-								["name"] = "Egg",
-								["value"] = tostring(tostring(FoundEgg_OBJECT)),
+								["name"] = "🥚 Egg",
+								["value"] = "```" .. tostring(tostring(FoundEgg_OBJECT)) .. "```",
 							},
 							{
-								["name"] = "Luck Multiplier",
-								["value"] = tostring(LuckMulti),
+								["name"] = "🍀 Luck Multiplier",
+								["value"] = "```" .. tostring(LuckMulti) .. "```",
 							},
 							{
-								["name"] = "Time Left",
-								["value"] = tostring(Timer),
+								["name"] = "⏱ Time Left",
+								["value"] = "```" .. tostring(Timer) .. "```",
 							},
 							{
-								["name"] = "Estimated Height",
-								["value"] = tonumber(math.floor(Height)),
+								["name"] = "🎈 Estimated Height",
+								["value"] = "```" .. tonumber(math.floor(Height)) .. "```",
 							},
 							{
-								["name"] = "Server Link",
+								["name"] = "🔑 Server Link",
 								["value"] = "```roblox://placeId=" .. tostring(placeId) .. "&gameInstanceId=" .. tostring(game.JobId) .. "```",
 							},
 							{
-								["name"] = "Server Space",
-								["value"] = tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players",
+								["name"] = "👨‍👦 Server Space",
+								["value"] = "```" .. tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players" .. "```",
 							},
 						},
 						["color"] = 5763719,
@@ -188,7 +193,7 @@ elseif FoundEgg ~= nil then
 						}
 					}
 
-					SendMessage(FOUND_url, "**✨ EGG FOUND** - @everyone")
+					SendMessage(FOUND_url, "@everyone")
 					SendMessageEMBED(FOUND_url, Embed_FOUND)
 					
 					task.wait(5)
