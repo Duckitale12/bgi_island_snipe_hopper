@@ -10,7 +10,7 @@ local function getPublicServers()
 	local url = ("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Asc&limit=100"):format(placeId)
 	local success, response = pcall(function()
 		return HttpService:JSONDecode(game:HttpGet(url))
-	end)
+	end) 
 
 	if success and response and response.data then
 		return response.data
