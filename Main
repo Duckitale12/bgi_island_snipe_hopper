@@ -82,7 +82,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.5v"
+local ScriptVersion = "0.1.51v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -175,7 +175,7 @@ elseif FoundEgg ~= nil then
 							},
 							{
 								["name"] = "Server Link",
-								["value"] = "[Click to join!](roblox://placeId=" .. tostring(placeId) .. "&gameInstanceId=" .. tostring(game.JobId),
+								["value"] = "[Click to join!](roblox://placeId=" .. tostring(placeId) .. "&gameInstanceId=" .. tostring(game.JobId) .. ")",
 							},
 							{
 								["name"] = "Server Space",
@@ -191,7 +191,7 @@ elseif FoundEgg ~= nil then
 					SendMessage(FOUND_url, "**✨ EGG FOUND** - @everyone")
 					SendMessageEMBED(FOUND_url, Embed_FOUND)
 					
-					task.wait(3)
+					task.wait(5)
 
 					HopServer()
 				end
