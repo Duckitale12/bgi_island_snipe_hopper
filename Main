@@ -151,7 +151,7 @@ local Embed = {
 	["description"] = tostring(table.concat(FoundIslands, "\n ")),
 	["fields"] = {
 		{
-			["name"] = "Searching For:",
+			["name"] = "🔎 Searching For:",
 			["value"] = tostring(table.concat(LF_Eggs, "\n ")),
 		},
 	},
