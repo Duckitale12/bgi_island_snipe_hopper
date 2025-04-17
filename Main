@@ -20,7 +20,9 @@ end
 local function HopServer()
 	local servers = getPublicServers()
 	local currentJobId = game.JobId
-
+	
+	warn("Attempting to hop server!")
+	
 	for _, server in pairs(servers) do
 		if server.playing < server.maxPlayers and server.id ~= currentJobId then
 			TeleportService:TeleportToPlaceInstance(placeId, server.id, Players.LocalPlayer)
@@ -134,6 +136,8 @@ SendMessage("https://discord.com/api/webhooks/1362377342965649541/rEdlsoD5oeB5Tt
 task.wait(0.5)
 
 local FoundEgg = nil
+
+warn(FoundEgg)
 
 for _, egg in ipairs(LF_Eggs) do
 	for _, islandEgg in ipairs(FoundIslands) do
