@@ -122,7 +122,7 @@ local url = "https://discord.com/api/webhooks/1362179485138686032/_WkAElqFAcSC29
 
 ----------
 
-local ScriptVersion = "0.1.31v"
+local ScriptVersion = "0.1.32v"
 
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -197,7 +197,7 @@ elseif FoundEgg ~= nil then
 						["fields"] = {
 							{
 								["name"] = "Egg",
-								["value"] = tostring(FoundEgg.Name),
+								["value"] = tostring(tostring(FoundEgg_OBJECT)),
 							},
 							{
 								["name"] = "Luck Multiplier",
