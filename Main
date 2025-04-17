@@ -2,6 +2,8 @@ local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 
+local ERROR_url = "https://discord.com/api/webhooks/1362488451156541642/JnW6WbxVuGKRSE30SitBjmoNXmF4kQnSVQdPCjGtd8OIZLSV4SsvSyWaAxquw5SYHOjt"
+
 local placeId = game.PlaceId
 
 local function getPublicServers()
@@ -30,6 +32,25 @@ local function HopServer()
 		end
 	end
 end
+
+TeleportService.TeleportInitFailed:Connect(function(player, teleportResult, errorMessage)
+	warn("Teleport failed:", teleportResult, errorMessage)
+	SendMessage(ERROR_url, "<@1123917877074997298> Teleport failed: ", teleportResult, errorMessage)
+
+	if teleportResult == Enum.TeleportResult.Flooded then
+		warn("Flooded, retrying after delay...")
+		SendMessage(ERROR_url, "<@1123917877074997298> Flooded, retrying in 60s")
+
+		task.wait(60) -- Wait a bit before retrying
+		HopServer() -- Retry hopping
+	end
+end)
+
+TeleportService.TeleportStateChanged:Connect(function(state)
+	print("Teleport state:", state)
+	SendMessage(ERROR_url, "Teleport state:" .. state)
+end)
+
 
 
 ----------
@@ -84,7 +105,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.63v"
+local ScriptVersion = "0.1.65v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -130,7 +151,7 @@ local Embed = {
 
 ---
 
-task.wait(3)
+task.wait(5)
 
 SendMessageEMBED(url, Embed)
 SendMessage("https://discord.com/api/webhooks/1362377342965649541/rEdlsoD5oeB5TtsSWLBaye40Q2Hf9_Gt96WTiFsmNh1VUV108i0MdXcy3kteF70-YuPE", game.JobId)
@@ -153,10 +174,7 @@ end
 if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
 	
-	while true do
-		HopServer()
-		task.wait(15)
-	end
+	HopServer()
 elseif FoundEgg ~= nil then
 	task.wait(1)
 	for _, FoundEgg_OBJECT in workspace.Rendered.Rifts:GetChildren() do
@@ -206,15 +224,11 @@ elseif FoundEgg ~= nil then
 					SendMessage(FOUND_url, "@everyone")
 					SendMessageEMBED(FOUND_url, Embed_FOUND)
 					
-					task.wait(3)
+					task.wait(5)
 
-					while true do
-						HopServer()
-						task.wait(15)
-					end
+					HopServer()
 				end
 			end
 		end
 end
 
- 
