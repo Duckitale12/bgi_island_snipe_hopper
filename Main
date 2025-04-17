@@ -128,11 +128,15 @@ local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
 local FoundIslands = {}
 
+local LF_Eggs = {"void-egg (x25)", "nightmare-egg (x25)"}
+
 for _, Island in workspace.Rendered.Rifts:GetChildren() do
 	if Island.Display.SurfaceGui:FindFirstChild("Icon") then
 		table.insert(FoundIslands, tostring(Island.Name .. " (" .. Island.Display.SurfaceGui.Icon.Luck.Text .. ")"))
 
 		if Island.Name == "aura-egg" then
+			SendMessage(url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
+			SendMessage(url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
 			SendMessage(url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
 
 			task.wait(200)
@@ -142,11 +146,9 @@ end
 
 task.wait(0.1)
 
-local LF_EGG = "void-egg (x25)"
-
 local Embed = {
 	["title"] = "🥚 Eggs Found: ",
-	["description"] = "@everyone \n" .. tostring(table.concat(FoundIslands, "\n ")),
+	["description"] = tostring(table.concat(FoundIslands, "\n ")),
 	["fields"] = {
 		{
 			["name"] = "Searching For:",
@@ -155,7 +157,7 @@ local Embed = {
 	},
 	["color"] = 16777215,
 	["footer"] = {
-		["text"] = tostring(os.date("%H:%M:%S")) .. " | " .. tostring(ScriptVersion)
+		["text"] = tostring(ScriptVersion) .. " | " ..  tostring(os.date("%H:%M:%S")) 
 	}
 }
 
@@ -165,73 +167,73 @@ SendMessageEMBED(url, Embed)
 
 task.wait(0.5)
 
-if table.find(FoundIslands, LF_EGG) then
+local FoundEgg = nil
 
-	for _, FoundEgg in workspace.Rendered.Rifts:GetChildren() do
-		if FoundEgg.Display.SurfaceGui:FindFirstChild("Icon") then
-			local LFstring = tostring(FoundEgg.Name .. " (" .. FoundEgg.Display.SurfaceGui.Icon.Luck.Text .. ")")
-
-			if LFstring == LF_EGG then
-				warn("Found!")
-
-				local LuckMulti = FoundEgg.Display.SurfaceGui.Icon.Luck.Text
-				local Timer = FoundEgg.Display.SurfaceGui.Timer.Text
-				local Height = FoundEgg.Display.CFrame.Y
-
-				local Embed_FOUND = {
-					["title"] = "❗ EGG HAS BEEN FOUND ❗",
-					["description"] = LF_EGG .. " has been found!",
-					["fields"] = {
-						{
-							["name"] = "Egg",
-							["value"] = tostring(FoundEgg.Name),
-						},
-						{
-							["name"] = "Luck Multiplier",
-							["value"] = tostring(LuckMulti),
-						},
-						{
-							["name"] = "Time Left",
-							["value"] = tostring(Timer),
-						},
-						{
-							["name"] = "Estimated Height",
-							["value"] = tonumber(math.floor(Height)),
-						},
-						{
-							["name"] = "Account Username",
-							["value"] = "@" .. tostring(game.Players.LocalPlayer.Name) .. " - AUTO-LEAVING IN 45 SECCONDS!",
-						},
-						{
-							["name"] = "Server Space",
-							["value"] = tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players",
-						},
-					},
-					["color"] = 5763719,
-					["footer"] = {
-						["text"] = tostring(os.date("%H:%M:%S")) .. " | " .. tostring(ScriptVersion)
-					}
-				}
-
-				SendMessage(url, "**✨ EGG FOUND** - @everyone")
-				SendMessageEMBED(url, Embed_FOUND)
-				
-				task.wait(30)
-				
-				SendMessage(url, "*Leaving server in 15s...*")
-
-				task.wait(15)
-				
-				SendMessage(url, "*Looking for more eggs...*")
-				
-				task.wait(1)
-				
-				ServerHop()
-			end
+for _, egg in ipairs(LF_Eggs) do
+	for _, islandEgg in ipairs(FoundIslands) do
+		if egg == islandEgg then
+			FoundEgg = egg
+			print("Found matching egg:", FoundEgg)
 		end
 	end
+end
 
-else
+if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
 	ServerHop()
+else
+	local LuckMulti = FoundEgg.Display.SurfaceGui.Icon.Luck.Text
+	local Timer = FoundEgg.Display.SurfaceGui.Timer.Text
+	local Height = FoundEgg.Display.CFrame.Y
+
+	local Embed_FOUND = {
+		["title"] = "❗ EGG HAS BEEN FOUND ❗",
+		["description"] = FoundEgg .. " has been found!",
+		["fields"] = {
+			{
+				["name"] = "Egg",
+				["value"] = tostring(FoundEgg.Name),
+			},
+			{
+				["name"] = "Luck Multiplier",
+				["value"] = tostring(LuckMulti),
+			},
+			{
+				["name"] = "Time Left",
+				["value"] = tostring(Timer),
+			},
+			{
+				["name"] = "Estimated Height",
+				["value"] = tonumber(math.floor(Height)),
+			},
+			{
+				["name"] = "Account Username",
+				["value"] = "@" .. tostring(game.Players.LocalPlayer.Name) .. " - AUTO-LEAVING IN 45 SECCONDS!",
+			},
+			{
+				["name"] = "Server Space",
+				["value"] = tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players",
+			},
+		},
+		["color"] = 5763719,
+		["footer"] = {
+			["text"] =  tostring(ScriptVersion) .. " | " ..  tostring(os.date("%H:%M:%S")) 
+		}
+	}
+
+	SendMessage(url, "**✨ EGG FOUND** - @everyone")
+	SendMessageEMBED(url, Embed_FOUND)
+
+	task.wait(30)
+
+	SendMessage(url, "*Leaving server in 15s...*")
+
+	task.wait(15)
+
+	SendMessage(url, "*Looking for more eggs...*")
+
+	task.wait(1)
+
+	ServerHop()
 end
+
