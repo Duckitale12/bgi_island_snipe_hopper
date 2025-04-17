@@ -82,7 +82,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.6v"
+local ScriptVersion = "0.1.61v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -146,7 +146,11 @@ end
 
 if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
-	HopServer()
+	
+	while true do
+		HopServer()
+		task.wait(1)
+	end
 elseif FoundEgg ~= nil then
 	task.wait(1)
 	for _, FoundEgg_OBJECT in workspace.Rendered.Rifts:GetChildren() do
@@ -196,9 +200,12 @@ elseif FoundEgg ~= nil then
 					SendMessage(FOUND_url, "@everyone")
 					SendMessageEMBED(FOUND_url, Embed_FOUND)
 					
-					task.wait(5)
+					task.wait(3)
 
-					HopServer()
+					while true do
+						HopServer()
+						task.wait(1)
+					end
 				end
 			end
 		end
