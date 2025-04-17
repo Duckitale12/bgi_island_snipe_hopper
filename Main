@@ -3,13 +3,16 @@ local AllIDs = {}
 local foundAnything = ""
 local actualHour = os.date("!*t").hour
 local Deleted = false
+
 local File = pcall(function()
 	AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
 end)
+
 if not File then
 	table.insert(AllIDs, actualHour)
 	writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
 end
+
 function TPReturner()
 	local Site;
 	if foundAnything == "" then
@@ -119,6 +122,10 @@ local url = "https://discord.com/api/webhooks/1362179485138686032/_WkAElqFAcSC29
 
 ----------
 
+local ScriptVersion = "0.1.2v"
+
+local PlayerCount = #game.Players:GetPlayers()
+local MaxPlayers = 12
 local FoundIslands = {}
 
 for _, Island in workspace.Rendered.Rifts:GetChildren() do
@@ -139,7 +146,7 @@ local LF_EGG = "void-egg (x25)"
 
 local Embed = {
 	["title"] = "🥚 Eggs Found: ",
-	["description"] = tostring(table.concat(FoundIslands, "\n ")),
+	["description"] = tostring(table.concat(FoundIslands, "\n ")) .. " @everyone",
 	["fields"] = {
 		{
 			["name"] = "Searching For:",
@@ -148,7 +155,7 @@ local Embed = {
 	},
 	["color"] = 16777215,
 	["footer"] = {
-		["text"] = tostring(os.date("%H:%M:%S"))
+		["text"] = tostring(os.date("%H:%M:%S")) .. " | " .. tostring(ScriptVersion)
 	}
 }
 
@@ -195,10 +202,14 @@ if table.find(FoundIslands, LF_EGG) then
 							["name"] = "Account Username",
 							["value"] = "@" .. tostring(game.Players.LocalPlayer.Name) .. " - AUTO-LEAVING IN 45 SECCONDS!",
 						},
+						{
+							["name"] = "Server Space",
+							["value"] = tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players",
+						},
 					},
 					["color"] = 5763719,
 					["footer"] = {
-						["text"] = tostring(os.date("%H:%M:%S"))
+						["text"] = tostring(os.date("%H:%M:%S")) .. " | " .. tostring(ScriptVersion)
 					}
 				}
 
