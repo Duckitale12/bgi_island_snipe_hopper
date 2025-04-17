@@ -119,6 +119,7 @@ function SendMessageEMBED(url, embed)
 end
 
 local url = "https://discord.com/api/webhooks/1362179485138686032/_WkAElqFAcSC29tyl5ZyCommJp9qp0IdVXfTPaBfVVz-r_kJt6LKVPUiFrXgYUDtvSLG"
+local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pzc764ZIFKQLu1mXKGBum4hGvru_wXjgY4zgKkJWfw9Ng24Q6lrpdiort-Hw2z"
 
 ---------- 
 
@@ -135,9 +136,9 @@ for _, Island in workspace.Rendered.Rifts:GetChildren() do
 		table.insert(FoundIslands, tostring(Island.Name .. " (" .. Island.Display.SurfaceGui.Icon.Luck.Text .. ")"))
 
 		if Island.Name == "aura-egg" then
-			SendMessage(url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
-			SendMessage(url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
-			SendMessage(url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
+			SendMessage(FOUND_url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
+			SendMessage(FOUND_url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
+			SendMessage(FOUND_url, "**❗ AURA EGG FOUND ❗** - USER:  @" .. tostring(game.Players.LocalPlayer.Name) .. "  - @everyone")
 
 			task.wait(200)
 		end
@@ -226,16 +227,16 @@ elseif FoundEgg ~= nil then
 						}
 					}
 
-					SendMessage(url, "**✨ EGG FOUND** - @everyone")
-					SendMessageEMBED(url, Embed_FOUND)
+					SendMessage(FOUND_url, "**✨ EGG FOUND** - @everyone")
+					SendMessageEMBED(FOUND_url, Embed_FOUND)
 
 					task.wait(30)
 
-					SendMessage(url, "*Leaving server in 15s...*")
+					SendMessage(FOUND_url, "*Leaving server in 15s...*")
 
 					task.wait(15)
 
-					SendMessage(url, "*Looking for more eggs...*")
+					SendMessage(FOUND_url, "*Looking for more eggs...*")
 
 					task.wait(1)
 
