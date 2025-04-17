@@ -146,7 +146,7 @@ local LF_EGG = "void-egg (x25)"
 
 local Embed = {
 	["title"] = "🥚 Eggs Found: ",
-	["description"] = tostring(table.concat(FoundIslands, "\n ")) .. " @everyone",
+	["description"] = "@everyone \n" .. tostring(table.concat(FoundIslands, "\n ")),
 	["fields"] = {
 		{
 			["name"] = "Searching For:",
