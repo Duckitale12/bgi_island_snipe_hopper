@@ -46,11 +46,6 @@ TeleportService.TeleportInitFailed:Connect(function(player, teleportResult, erro
 	end
 end)
 
-TeleportService.TeleportStateChanged:Connect(function(state)
-	print("Teleport state:", state)
-	SendMessage(ERROR_url, "Teleport state:" .. state)
-end)
-
 
 
 ----------
@@ -105,7 +100,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.65v"
+local ScriptVersion = "0.1.66v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
