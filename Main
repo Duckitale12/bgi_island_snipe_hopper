@@ -84,7 +84,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.62v"
+local ScriptVersion = "0.1.63v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -106,7 +106,7 @@ for _, Island in workspace.Rendered.Rifts:GetChildren() do
 	end
 end
 
-task.wait(0.1)
+task.wait(1)
 
 local Embed = {
 	["title"] = "🥚 Eggs Found",
@@ -130,10 +130,12 @@ local Embed = {
 
 ---
 
+task.wait(3)
+
 SendMessageEMBED(url, Embed)
 SendMessage("https://discord.com/api/webhooks/1362377342965649541/rEdlsoD5oeB5TtsSWLBaye40Q2Hf9_Gt96WTiFsmNh1VUV108i0MdXcy3kteF70-YuPE", game.JobId)
 
-task.wait(0.5)
+task.wait(1)
 
 local FoundEgg = nil
 
@@ -153,7 +155,7 @@ if FoundEgg == nil then
 	
 	while true do
 		HopServer()
-		task.wait(1)
+		task.wait(15)
 	end
 elseif FoundEgg ~= nil then
 	task.wait(1)
@@ -208,7 +210,7 @@ elseif FoundEgg ~= nil then
 
 					while true do
 						HopServer()
-						task.wait(1)
+						task.wait(15)
 					end
 				end
 			end
