@@ -120,7 +120,7 @@ end
 
 local url = "https://discord.com/api/webhooks/1362179485138686032/_WkAElqFAcSC29tyl5ZyCommJp9qp0IdVXfTPaBfVVz-r_kJt6LKVPUiFrXgYUDtvSLG"
 
-----------
+---------- 
 
 local ScriptVersion = "0.1.32v"
 
