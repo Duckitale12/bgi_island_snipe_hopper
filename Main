@@ -122,7 +122,7 @@ local url = "https://discord.com/api/webhooks/1362179485138686032/_WkAElqFAcSC29
 
 ----------
 
-local ScriptVersion = "0.1.3v"
+local ScriptVersion = "0.1.31v"
 
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -182,59 +182,66 @@ if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
 	ServerHop()
 elseif FoundEgg ~= nil then
-	warn(FoundEgg)
-	local LuckMulti = FoundEgg.Display.SurfaceGui.Icon.Luck.Text
-	local Timer = FoundEgg.Display.SurfaceGui.Timer.Text
-	local Height = FoundEgg.Display.CFrame.Y
+	for _, FoundEgg_OBJECT in workspace.Rendered.Rifts:GetChildren() do
+		if FoundEgg_OBJECT.Display.SurfaceGui:FindFirstChild("Icon") then
+			local LFstring = tostring(FoundEgg_OBJECT.Name .. " (" .. FoundEgg_OBJECT.Display.SurfaceGui.Icon.Luck.Text .. ")")
+			
+				if LFstring == FoundEgg then
+					local LuckMulti = FoundEgg_OBJECT.Display.SurfaceGui.Icon.Luck.Text
+					local Timer = FoundEgg_OBJECT.Display.SurfaceGui.Timer.Text
+					local Height = FoundEgg_OBJECT.Display.CFrame.Y
 
-	local Embed_FOUND = {
-		["title"] = "❗ EGG HAS BEEN FOUND ❗",
-		["description"] = FoundEgg .. " has been found!",
-		["fields"] = {
-			{
-				["name"] = "Egg",
-				["value"] = tostring(FoundEgg.Name),
-			},
-			{
-				["name"] = "Luck Multiplier",
-				["value"] = tostring(LuckMulti),
-			},
-			{
-				["name"] = "Time Left",
-				["value"] = tostring(Timer),
-			},
-			{
-				["name"] = "Estimated Height",
-				["value"] = tonumber(math.floor(Height)),
-			},
-			{
-				["name"] = "Account Username",
-				["value"] = "@" .. tostring(game.Players.LocalPlayer.Name) .. " - AUTO-LEAVING IN 45 SECCONDS!",
-			},
-			{
-				["name"] = "Server Space",
-				["value"] = tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players",
-			},
-		},
-		["color"] = 5763719,
-		["footer"] = {
-			["text"] =  tostring(ScriptVersion) .. " | " ..  tostring(os.date("%H:%M:%S")) 
-		}
-	}
+					local Embed_FOUND = {
+						["title"] = "❗ EGG HAS BEEN FOUND ❗",
+						["description"] = FoundEgg .. " has been found!",
+						["fields"] = {
+							{
+								["name"] = "Egg",
+								["value"] = tostring(FoundEgg.Name),
+							},
+							{
+								["name"] = "Luck Multiplier",
+								["value"] = tostring(LuckMulti),
+							},
+							{
+								["name"] = "Time Left",
+								["value"] = tostring(Timer),
+							},
+							{
+								["name"] = "Estimated Height",
+								["value"] = tonumber(math.floor(Height)),
+							},
+							{
+								["name"] = "Account Username",
+								["value"] = "@" .. tostring(game.Players.LocalPlayer.Name) .. " - AUTO-LEAVING IN 45 SECCONDS!",
+							},
+							{
+								["name"] = "Server Space",
+								["value"] = tostring(PlayerCount) .. "/" .. tostring(MaxPlayers) .. " Players",
+							},
+						},
+						["color"] = 5763719,
+						["footer"] = {
+							["text"] =  tostring(ScriptVersion) .. " | " ..  tostring(os.date("%H:%M:%S")) 
+						}
+					}
 
-	SendMessage(url, "**✨ EGG FOUND** - @everyone")
-	SendMessageEMBED(url, Embed_FOUND)
+					SendMessage(url, "**✨ EGG FOUND** - @everyone")
+					SendMessageEMBED(url, Embed_FOUND)
 
-	task.wait(30)
+					task.wait(30)
 
-	SendMessage(url, "*Leaving server in 15s...*")
+					SendMessage(url, "*Leaving server in 15s...*")
 
-	task.wait(15)
+					task.wait(15)
 
-	SendMessage(url, "*Looking for more eggs...*")
+					SendMessage(url, "*Looking for more eggs...*")
 
-	task.wait(1)
+					task.wait(1)
 
-	ServerHop()
+					ServerHop()
+				end
+			end
+		end
 end
 
