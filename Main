@@ -82,7 +82,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.53v"
+local ScriptVersion = "0.1.54v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -108,11 +108,11 @@ task.wait(0.1)
 
 local Embed = {
 	["title"] = "🥚 Eggs Found: ",
-	["description"] = tostring(table.concat(FoundIslands, "\n ")),
+	["description"] = "```" .. tostring(table.concat(FoundIslands, "\n ")) .. "```",
 	["fields"] = {
 		{
 			["name"] = "🔎 Searching For:",
-			["value"] = tostring(table.concat(LF_Eggs, "\n ")),
+			["value"] = "```" .. tostring(table.concat(LF_Eggs, "\n ")) .. "```",
 		},
 	},
 	["color"] = 16777215,
@@ -175,7 +175,7 @@ elseif FoundEgg ~= nil then
 							},
 							{
 								["name"] = "Server Link",
-								["value"] = "[Click to join!](roblox://placeId=" .. tostring(placeId) .. "&gameInstanceId=" .. tostring(game.JobId) .. ")",
+								["value"] = "```roblox://placeId=" .. tostring(placeId) .. "&gameInstanceId=" .. tostring(game.JobId) .. "```",
 							},
 							{
 								["name"] = "Server Space",
