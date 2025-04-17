@@ -7,7 +7,7 @@ local Deleted = false
 local File = pcall(function()
 	AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
 end)
- 
+
 if not File then
 	table.insert(AllIDs, actualHour)
 	writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
@@ -123,7 +123,7 @@ local FOUND_url = "https://discord.com/api/webhooks/1362339056113160232/ptikp5Pz
 
 ---------- 
 
-local ScriptVersion = "0.1.4v"
+local ScriptVersion = "0.1.41v"
  
 local PlayerCount = #game.Players:GetPlayers()
 local MaxPlayers = 12
@@ -173,8 +173,8 @@ local FoundEgg = nil
 for _, egg in ipairs(LF_Eggs) do
 	for _, islandEgg in ipairs(FoundIslands) do
 		if egg == islandEgg then
-			FoundEgg = egg
 			print("Found matching egg:", FoundEgg)
+			FoundEgg = egg
 		end
 	end
 end
@@ -183,6 +183,7 @@ if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
 	ServerHop()
 elseif FoundEgg ~= nil then
+	task.wait(1)
 	for _, FoundEgg_OBJECT in workspace.Rendered.Rifts:GetChildren() do
 		if FoundEgg_OBJECT.Display.SurfaceGui:FindFirstChild("Icon") then
 			local LFstring = tostring(FoundEgg_OBJECT.Name .. " (" .. FoundEgg_OBJECT.Display.SurfaceGui.Icon.Luck.Text .. ")")
