@@ -2,49 +2,75 @@ local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 
-local ERROR_url = "https://discord.com/api/webhooks/1362488451156541642/JnW6WbxVuGKRSE30SitBjmoNXmF4kQnSVQdPCjGtd8OIZLSV4SsvSyWaAxquw5SYHOjt"
-
 local placeId = game.PlaceId
-
-local function getPublicServers()
-	local url = ("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Asc&limit=100"):format(placeId)
-	local success, response = pcall(function()
-		return HttpService:JSONDecode(game:HttpGet(url))
-	end)
-
-	if success and response and response.data then
-		return response.data
-	else
-		return {}
-	end
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+	AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+	table.insert(AllIDs, actualHour)
+	writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
 end
-
-local function HopServer()
-	local servers = getPublicServers()
-	local currentJobId = game.JobId
-	
-	warn("Attempting to hop server!")
-	
-	for _, server in pairs(servers) do
-		if server.playing < server.maxPlayers and server.id ~= currentJobId then
-			TeleportService:TeleportToPlaceInstance(placeId, server.id, Players.LocalPlayer)
-			return
+function TPReturner()
+	local Site;
+	if foundAnything == "" then
+		Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. placeId .. '/servers/Public?sortOrder=Asc&limit=100'))
+	else
+		Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. placeId .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+	end
+	local ID = ""
+	if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+		foundAnything = Site.nextPageCursor
+	end
+	local num = 0;
+	for i,v in pairs(Site.data) do
+		local Possible = true
+		ID = tostring(v.id)
+		if tonumber(v.maxPlayers) > tonumber(v.playing) then
+			for _,Existing in pairs(AllIDs) do
+				if num ~= 0 then
+					if ID == tostring(Existing) then
+						Possible = false
+					end
+				else
+					if tonumber(actualHour) ~= tonumber(Existing) then
+						local delFile = pcall(function()
+							delfile("NotSameServers.json")
+							AllIDs = {}
+							table.insert(AllIDs, actualHour)
+						end)
+					end
+				end
+				num = num + 1
+			end
+			if Possible == true then
+				table.insert(AllIDs, ID)
+				wait()
+				pcall(function()
+					writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+					wait()
+					game:GetService("TeleportService"):TeleportToPlaceInstance(placeId, ID, game.Players.LocalPlayer)
+				end)
+				wait(4)
+			end
 		end
 	end
 end
 
-TeleportService.TeleportInitFailed:Connect(function(player, teleportResult, errorMessage)
-	warn("Teleport failed:", teleportResult, errorMessage)
-	SendMessage(ERROR_url, "<@1123917877074997298> Teleport failed: ", teleportResult, errorMessage)
-
-	if teleportResult == Enum.TeleportResult.Flooded then
-		warn("Flooded, retrying after delay...")
-		SendMessage(ERROR_url, "<@1123917877074997298> Flooded, retrying in 60s")
-
-		task.wait(60) -- Wait a bit before retrying
-		HopServer() -- Retry hopping
+function ServerHop()
+	while wait() do
+		pcall(function()
+			TPReturner()
+			if foundAnything ~= "" then
+				TPReturner()
+			end
+		end)
 	end
-end)
+end
+
 
 
 
@@ -169,7 +195,7 @@ end
 if FoundEgg == nil then
 	SendMessage(url, "*Changing servers...*")
 	
-	HopServer()
+	ServerHop()
 elseif FoundEgg ~= nil then
 	task.wait(1)
 	for _, FoundEgg_OBJECT in workspace.Rendered.Rifts:GetChildren() do
@@ -221,7 +247,7 @@ elseif FoundEgg ~= nil then
 					
 					task.wait(5)
 
-					HopServer()
+					ServerHop()
 				end
 			end
 		end
